@@ -40,11 +40,7 @@ const SearchResults = () => {
   const navigate = useNavigate();
 
   const apiKeys = [
-    "pub_82328a8ff9a97822fcc3192362874344598d3",
-    "pub_83929a5701321b714d40f6b6e66fa450dd495",
-    // "pub_8413826977a180b80aaf4c4da724d99e0b8b6",
-    // "pub_84141afd7f1cb761e6c92e54d12ff62b7c7f",
-    // "pub_8414346d6cac088c8a2460157b727a45d75b"
+  
   ];
 
   const fetchNews = async (keyword = "", pageParam = null) => {
