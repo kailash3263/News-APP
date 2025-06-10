@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="w-100 ">
-      <footer className="bg-light text-center text-white" >
+    <div className="w-100">
+      <footer className="bg-light text-center text-white">
         {/* Grid container */}
         <div className="w-100 p-4 pb-2" style={{ backgroundColor: "#cccccc" }}>
           {/* Section: Social media */}
@@ -11,43 +11,59 @@ const Footer = () => {
             {/* Facebook */}
             <a
               className="btn btn-primary m-1 mx-2"
-              style={{ backgroundColor: "#3b5998", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#3b5998",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="https://www.facebook.com/share/1YWeP2aDQd/"
+              target="_blank"
+              rel="noopener noreferrer"
               role="button"
             >
               <i className="fab fa-facebook-f"></i>
             </a>
 
-            {/* Twitter */}
+            {/* Twitter (X) */}
             <a
               className="btn btn-primary m-1 mx-3"
-              style={{ backgroundColor: "#55acee", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#55acee",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="https://x.com/pashikantivara1?t=MtDE8Sj3iK2PbKfqvkUNXw&s=08"
+              target="_blank"
+              rel="noopener noreferrer"
               role="button"
             >
               <i className="fab fa-twitter"></i>
             </a>
 
-            {/* gmail */}
+            {/* Gmail */}
             <a
               className="btn btn-primary m-1 mx-3"
-              style={{ backgroundColor: "#D44638", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#D44638",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="mailto:mohdabdulrazzak9850@gmail.com"
               role="button"
             >
               <i className="far fa-envelope"></i>
@@ -56,28 +72,39 @@ const Footer = () => {
             {/* Instagram */}
             <a
               className="btn btn-primary m-1 mx-3"
-              style={{ backgroundColor: "#C13584", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#C13584",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="https://www.instagram.com/abdul_razzak1604/profilecard/?igsh=MXZ1YTUxejBqYzNkYw=="
+              target="_blank"
+              rel="noopener noreferrer"
               role="button"
             >
               <i className="fab fa-instagram"></i>
             </a>
 
-            {/* Linkedin */}
+            {/* Linkedin (placeholder since not provided) */}
             <a
               className="btn btn-primary m-1 mx-3"
-              style={{ backgroundColor: "#0082ca", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#0082ca",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="https://www.linkedin.com/in/kailash-choudhary-517aa6198?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              target="_blank"
               role="button"
             >
               <i className="fab fa-linkedin-in"></i>
@@ -86,33 +113,38 @@ const Footer = () => {
             {/* Github */}
             <a
               className="btn btn-primary m-1 mx-3"
-              style={{ backgroundColor: "#333333", borderRadius: "50%",
-  width: "3em",
-  height: "3em",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center", borderColor: "#cccccc" }}
-              href="#!"
+              style={{
+                backgroundColor: "#333333",
+                borderRadius: "50%",
+                width: "3em",
+                height: "3em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderColor: "#cccccc",
+              }}
+              href="https://github.com/kailash3263/News-APP.git"
+              target="_blank"
+              rel="noopener noreferrer"
               role="button"
             >
               <i className="fab fa-github"></i>
             </a>
           </section>
-          {/* Section: Social media */}
         </div>
-        {/* Grid container */}
 
         {/* Copyright */}
-        <div
-          className="text-center p-3"
-          style={{ backgroundColor: "#a6a6a6" }}
-        >
-          © 2020 Copyright:
-          <a className="text-white" href="https://mdbootstrap.com/">
-            MDBootstrap.com
+        <div className="text-center p-3" style={{ backgroundColor: "#a6a6a6" }}>
+          © 2025 News App by&nbsp;
+          <a
+            className="text-white"
+            href="https://github.com/kailash3263"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kailash Choudhary
           </a>
         </div>
-        {/* Copyright */}
       </footer>
     </div>
   );
