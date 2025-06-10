@@ -44,7 +44,7 @@ const AISummaryModal = ({ show, handleClose, url, newsTitle,discription }) => {
 
   // Function to extract all text from a URL
   async function extractAllText(url) {
-    const proxyUrl = `https://app.scrapingbee.com/api/v1/?api_key=GBI9ZYYQW6J0ORLF9YWRM8T2HYVP2KJZSQ3KG577WP25QO3VQ1ELIS3UJYMK5UA96ENYBBGHMI6WQT0N&url=${encodeURIComponent(url)}`;
+    const proxyUrl = `https://app.scrapingbee.com/api/v1/?api_key=&url=${encodeURIComponent(url)}`;
     
     try {
       const response = await fetch(proxyUrl);
@@ -74,14 +74,11 @@ const AISummaryModal = ({ show, handleClose, url, newsTitle,discription }) => {
   }
   
 
-  // Function to call the Gemini API
-  // const ai = new GoogleGenAI({ apiKey: "AIzaSyCXMWTKolfnWjHwJ6CekGsCvX8LYRWpkzs" });
-
   const [reply, setReply] = useState("");
 
   async function geminiApi(content) {
     // useEffect(() => {
-      const ai = new GoogleGenAI({ apiKey: "AIzaSyBilyRG7jAEqcStdRKE-I1ksZjBopcOSBQ" });
+      const ai = new GoogleGenAI({ apiKey: "" });
       try {
         const response = await ai.models.generateContent({
           model: "gemini-2.0-flash",
