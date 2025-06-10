@@ -1,0 +1,16 @@
+.toast {
+  background-color: gray;
+  color: #ffffff;
+  position: fixed;
+  margin: auto;
+}
+#sideNav{
+  width: 75%; /* Default for mobile */
+  /* background-color: black; */
+}
+
+@media (min-width: 760px) {
+#sideNav {
+    width: 25%; 
+  }
+}
