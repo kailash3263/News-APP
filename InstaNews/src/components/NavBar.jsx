@@ -1,29 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import SideNavBar from "./SideNavBar";
 
-const NavBar = ({ onSearch }) => {
+const NavBar = () => {
   const [keyword, setKeyword] = useState("");
-
+  const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
       const searchRecord = {
         keyword: keyword.trim(),
-        time: new Date().toLocaleString(),
-        timestamp: Date.now(),
       };
-
-      let recent = JSON.parse(localStorage.getItem("recentSearches")) || [];
-      recent.unshift(searchRecord);
-      recent = recent.slice(0, 10);
-      localStorage.setItem("recentSearches", JSON.stringify(recent));
-
-      onSearch(keyword);
+      navigate(`/search/${keyword}`)
       setKeyword("");
     }
-  };
-
+  }
   return (
     <>
       <SideNavBar />
