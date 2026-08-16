@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link from react-router-dom
 import SideNavBar from "./SideNavBar";
-
+import { func } from "prop-types";
 const NavBar = () => {
   const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
@@ -11,16 +11,24 @@ const NavBar = () => {
       const searchRecord = {
         keyword: keyword.trim(),
       };
-      navigate(`/search/${keyword}`)
+      navigate(`/search/${keyword}`);
       setKeyword("");
     }
-  }
+  };
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const run = async ()=>{
+        let val = await fetch("http://localhost:5000/api/news/count");
+        let ans = await val.json();
+        setCount(ans);
+    }
+    run();
+  }, []);
   return (
     <>
       <SideNavBar />
       <nav className="navbar navbar-expand-lg navbar-light bg-primary px-3">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          {/* Left: Side Navbar Toggle Button */}
           <button
             className="btn me-2 bg-white"
             type="button"
@@ -38,6 +46,8 @@ const NavBar = () => {
             </Link>
           </div>
 
+          <h3 className="pe-2">total Articles: {count} </h3>
+
           {/* Right: Search toggle button for mobile */}
           <button
             className="navbar-toggler"
@@ -53,7 +63,10 @@ const NavBar = () => {
         </div>
 
         {/* Collapsible search form */}
-        <div className="collapse navbar-collapse justify-content-end" id="navbarContent">
+        <div
+          className="collapse navbar-collapse justify-content-end"
+          id="navbarContent"
+        >
           <form className="d-flex my-2 my-lg-0" onSubmit={handleSearch}>
             <input
               className="form-control me-4 w-100"

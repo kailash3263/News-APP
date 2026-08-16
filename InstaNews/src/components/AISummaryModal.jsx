@@ -2,141 +2,34 @@ import React, { useState, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai";
 import geminiLogo from "./geminiLogo.png";
 
-const AISummaryModal = ({ show, handleClose, url, newsTitle,discription }) => {
+const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
   const [loading, setLoading] = useState(true);
   const [displayedText, setDisplayedText] = useState("");
   const [fullText, setFullText] = useState("");
 
-  // Function to clean extracted text
-  function cleanExtractedText(rawText) {
-    const garbagePatterns = [
-      /also read/i,
-      /advertisement/i,
-      /read more/i,
-      /subscribe/i,
-      /newsletter/i,
-      /comments/i,
-      /publications|education|distribution|events|television|gaming/i,
-      /follow us/i,
-      /share this/i,
-      /click here/i,
-      /listen to story/i,
-      /watch now/i,
-      /^\s*$/, // blank lines
-    ];
-
-    const MIN_LINE_LENGTH = 40;
-    const MAX_CHARACTERS = 4000;
-
-    const lines = Array.isArray(rawText) ? rawText : rawText.split("\n");
-
-    const cleaned = lines
-      .map((line) => line.trim())
-      .filter(
-        (line) =>
-          line.length >= MIN_LINE_LENGTH &&
-          !garbagePatterns.some((pattern) => pattern.test(line))
-      )
-      .join("\n\n");
-
-    return cleaned.slice(0, MAX_CHARACTERS);
-  }
-
-  // Function to extract all text from a URL
-  async function extractAllText(url) {
-    const proxyUrl = `https://app.scrapingbee.com/api/v1/?api_key=&url=${encodeURIComponent(url)}`;
-    
-    try {
-      const response = await fetch(proxyUrl);
-      const html = await response.text(); // 👈 Use text instead of json
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-  
-      const elements = doc.querySelectorAll("h1, h2, h3, p");
-      let text = Array.from(elements)
-        .map((el) => el.textContent.trim())
-        .filter(Boolean)
-        .join("\n\n");
-  
-      let cleanedtt = cleanExtractedText(text);
-  
-      console.log("text from url: " + cleanedtt + "\ntext finish from url\n");
-  
-      if (!cleanedtt || cleanedtt.length < 150) {
-        cleanedtt = discription || newsTitle;
-      }
-  
-      return cleanedtt;
-    } catch (err) {
-      console.error("Error extracting:", err);
-      return discription || newsTitle;
-    }
-  }
-  
-
-  const [reply, setReply] = useState("");
-
-  async function geminiApi(content) {
-    // useEffect(() => {
-      const ai = new GoogleGenAI({ apiKey: "" });
-      try {
-        const response = await ai.models.generateContent({
-          model: "gemini-2.0-flash",
-          contents: content,
-        }); 
-
-        console.log( "reply from gemini api "+response.text + 'text finished from gemini api')  
-        // setReply(response.text);
-        console.log("API call successful");
-        return response.text;
-
-      } catch (error) {
-        console.error("Error fetching AI explanation:", error);
-        setReply("Error fetching response.");
-      }
-      // main();
-    // }, []);
-  // console.log( 'response from geminin api ', reply)
-    // return reply;
-    // return response.text;
-  }
-
+  // const [reply, setReply] = useState("");
   // Fetch and process data when the modal is shown
   useEffect(() => {
     if (show) {
+      console.log("request send to backend",show)
       setLoading(true);
       setDisplayedText("");
-
-      const processSummary = async () => {
-        const cleanedText = await extractAllText(url);
       
-        if (cleanedText) {
-          const fullPrompt = `Title: ${newsTitle}
-
-The following text was extracted from a news website and may contain unrelated sections like ads, navigation links, or promotional lines.
-
-Ignore all irrelevant content and summarize only the part that relates to the actual news based on the given title. Focus on extracting the core news information — what happened, where, when, and who was involved.
-
-Be concise and ignore any unrelated phrases or web content in very simple and easy to understanding words.  Start your answer directly explaining the content.
-
-Text extracted from website:
-${cleanedText}`;
-          
-          // console.log(fullPrompt)
-          // let fullPrompt2 = 'explain me what pythogaras theroem '
-          let aiResponse  =  await geminiApi(fullPrompt);
-          setFullText(aiResponse);
-        } else {
-
-          setFullText("Unable to extract text from the provided URL.");
-        }
-
-        setLoading(false);
+      const processSummary = async () => {
+        const response = await fetch('http://localhost:5000/api/scrape', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: `${URL}`, newsTitle: `${newsTitl}` })
+      });
+      
+      const result = await response.json();
+      console.log(result)
+        setFullText(result.explanation)
+       setLoading(false);
       };
-
-      processSummary();
+      processSummary()
     }
-  }, [show, url, newsTitle]);
+  }, [URL,show]);
 
   // Display the text word by word
   useEffect(() => {
@@ -192,7 +85,7 @@ ${cleanedText}`;
       >
         <div className="modal-content" style={{ maxHeight: "100vh", overflowY: "auto" }}>
           <div className="modal-header">
-            <h5 className="modal-title">{newsTitle}</h5>
+            <h5 className="modal-title">{newsTitl}</h5>
             <button type="button" className="btn-close" onClick={handleClose}></button>
           </div>
           <div className="modal-body d-flex flex-column justify-content-center align-items-center">

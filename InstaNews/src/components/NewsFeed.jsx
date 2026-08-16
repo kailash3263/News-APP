@@ -2,33 +2,33 @@ import React, { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
 
 function NewsFeed({ keyword, category }) {
-
   function getNewsUrl(keyword, category) {
-  if (keyword) {
-    return `http://localhost:5000/api/news/search?q=${encodeURIComponent(keyword)}`;
+    if (keyword) {
+      return `http://localhost:5000/api/news/search?q=${encodeURIComponent(keyword)}`;
+    }
+    if (category) {
+      return `http://localhost:5000/api/news/category/${encodeURIComponent(category)}`;
+    }
+    return "http://localhost:5000/api/news";
   }
-  if (category) {
-    return `http://localhost:5000/api/news/category/${encodeURIComponent(category)}`;
-  }
-  return "http://localhost:5000/api/news";
-}
 
   const [news, setNews] = useState([]);
-useEffect(() => {
-  async function fetchNews() {
-    try {
-      const url = getNewsUrl(keyword, category);
-      const res = await fetch(url);
-      const data = await res.json();
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const url = getNewsUrl(keyword, category);
+        const res = await fetch(url);
+        const data = await res.json();
 
-      setNews(data.results);
-    } catch (err) {
-      console.error(err);
+        // setNews(data.results);
+        setNews(data);
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }
 
-  fetchNews();
-}, [keyword, category]);
+    fetchNews();
+  }, [keyword, category]);
 
   return (
     <div className="container mt-5">

@@ -3,7 +3,7 @@ import ActionIcons from "./likeShareIcon";
 import AISummaryModal from "./AISummaryModal"; // Importing the modal here
 import geminilogo from "./geminiLogo.png";
 
-const NewsCard = ({ title, imageUrl, sourceName, link, pubDate ,NewsDiscription}) => {
+const NewsCard = ({ title, imageUrl, sourceName, link, pubDate}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleAISummaryClick = () => {
@@ -19,7 +19,6 @@ const NewsCard = ({ title, imageUrl, sourceName, link, pubDate ,NewsDiscription}
     source_name: sourceName,
     link,
     pubDate,
-    description: NewsDiscription,
   };
   
   return (
@@ -67,7 +66,7 @@ const NewsCard = ({ title, imageUrl, sourceName, link, pubDate ,NewsDiscription}
       </div>
 
       {/* Import and render Modal */}
-      <AISummaryModal show={showModal} url ={link} newsTitle = {title} handleClose={handleClose} discription =  {NewsDiscription} />
+      <AISummaryModal show={showModal} URL ={link} newsTitl = {title} handleClose={handleClose} />
       {/* <AISummaryModal show={showModal} url ={link} newsTitle = {title}/> */}
     </div>
   );
