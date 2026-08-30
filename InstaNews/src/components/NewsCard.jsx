@@ -3,7 +3,8 @@ import ActionIcons from "./likeShareIcon";
 import AISummaryModal from "./AISummaryModal"; // Importing the modal here
 import geminilogo from "./geminiLogo.png";
 
-const NewsCard = ({ title, imageUrl, sourceName, link, pubDate}) => {
+
+const NewsCard = ({ title, _id, imageUrl, sourceName, link, pubDate, showActionIcons, showDeleteButton = false,onDelete}) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleAISummaryClick = () => {
@@ -13,54 +14,64 @@ const NewsCard = ({ title, imageUrl, sourceName, link, pubDate}) => {
   const handleClose = () => {
     setShowModal(false);
   };
+
+  const handleDeleteClick = () => {
+     onDelete(_id);
+  };
   const article = {
+    _id,
     title,
     image_url: imageUrl,
     source_name: sourceName,
     link,
     pubDate,
   };
-  
+  // console.log("the image url is ",article);
   return (
-    <div>
+    <div className="news-card-wrapper">
       {/* News Card */}
-      <div
-        className="card my-3 mx-3"
-        style={{
-          width: "20rem",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          border: "1px solid #ddd",
-          backgroundColor: " #d9d9d9"
-        }}
-      >
+      <div className="card news-card my-3 mx-3 position-relative">
+        {showDeleteButton && (
+          <button
+            type="button"
+            className="news-card__delete-btn"
+            onClick={handleDeleteClick}
+            aria-label="Delete news"
+            title="Delete"
+          >
+            ×
+          </button>
+        )}
+
         <img
-          src={imageUrl || "https://via.placeholder.com/150"} // Fallback image if imageUrl is null
+          src={imageUrl || "https://via.placeholder.com/150"}
           className="card-img-top"
-          style={{ borderRadius: "10px" }}
           alt="News Thumbnail"
         />
         <div className="card-body pb-0 pt-1">
-          <div style={{ backgroundColor: " #d9d9d9" }}>
-            <small className="text-body-secondary text-danger">{sourceName || "Unknown Source"}</small>
+          <div>
+            <span className="source-pill">{sourceName || "Unknown Source"}</span>
           </div>
           <h5 className="card-title">
             <b>{title || "No Title Available"}</b>
           </h5>
-          <div style={{ backgroundColor: " #d9d9d9" }}>
-            <small className="text-body-secondary">{pubDate || "Unknown Date"}</small>
+          <div>
+            <small className="news-meta">{pubDate || "Unknown Date"}</small>
           </div>
 
-          <div className="d-flex justify-content-between mt-3">
-            <a href={link || "#"} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <div className="d-flex justify-content-between mt-3 gap-2">
+            <a href={link || "#"} className="btn btn-primary flex-grow-1" target="_blank" rel="noopener noreferrer">
               Read Full Story
             </a>
             <button className="btn btn-outline-secondary" onClick={handleAISummaryClick}>
-              AI Summary <img src={geminilogo} style={{ width: "1rem" }} alt="AI Summary" />
+              AI <img src={geminilogo} style={{ width: "1rem" }} alt="AI Summary" />
             </button>
           </div>
           <hr className="text-grey mt-3 w-100 my-0" />
-          <ActionIcons article={article} />
+         { 
+         showActionIcons ? <ActionIcons article={article} /> : 
+         <></>
+         }
 
         </div>
       </div>

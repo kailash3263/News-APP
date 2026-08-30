@@ -2,14 +2,21 @@ import React from "react";
 import Toast from 'bootstrap/js/dist/toast';
 const ShareModal = ({ article }) => {
   const showToast = (message) => {
-    // This will trigger the toast to appear (Bootstrap toast)
+    const toastElements = document.querySelectorAll("#liveToast");
+    if (toastElements.length > 1) {
+      toastElements.forEach((element, index) => {
+        if (index < toastElements.length - 1) element.remove();
+      });
+    }
+
     const toastElement = document.getElementById("liveToast");
-    const toastBody = toastElement.querySelector(".toast-body"); // Find the toast body
-  
-    // Set the dynamic message
+    if (!toastElement) return;
+
+    const toastBody = toastElement.querySelector(".toast-body");
+    if (!toastBody) return;
+
     toastBody.textContent = message;
     const toast = new Toast(toastElement);
-
     toast.show();
   };
   const shareToLinkedIn = () => {

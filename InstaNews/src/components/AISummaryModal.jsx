@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { GoogleGenAI } from "@google/genai";
 import geminiLogo from "./geminiLogo.png";
+import Toast from "bootstrap/js/dist/toast";
 
 const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
   const [loading, setLoading] = useState(true);
   const [displayedText, setDisplayedText] = useState("");
   const [fullText, setFullText] = useState("");
 
-  // const [reply, setReply] = useState("");
-  // Fetch and process data when the modal is shown
+    const showToast = (message) => {
+    const toastElements = document.querySelectorAll("#liveToast");
+    if (toastElements.length > 1) {
+      toastElements.forEach((element, index) => {
+        if (index < toastElements.length - 1) element.remove();
+      });
+    }
+
+    const toastElement = document.getElementById("liveToast");
+    if (!toastElement) return;
+    const toastBody = toastElement.querySelector(".toast-body");
+    if (!toastBody) return;
+    toastBody.textContent = message;
+    const toast = new Toast(toastElement);
+    toast.show();
+  };
+
   useEffect(() => {
     if (show) {
       console.log("request send to backend",show)
@@ -18,12 +34,16 @@ const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
       const processSummary = async () => {
         const response = await fetch('http://localhost:5000/api/scrape', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: `${URL}`, newsTitle: `${newsTitl}` })
       });
       
       const result = await response.json();
-      console.log(result)
+      if(result.message){
+          showToast("login for AI Explanation") 
+          return;
+        }
         setFullText(result.explanation)
        setLoading(false);
       };
@@ -71,6 +91,7 @@ const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
   if (!show) return null;
 
   return (
+    <>
     <div
       className="modal fade show d-block"
       tabIndex="-1"
@@ -82,7 +103,7 @@ const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
       <div
         className="modal-dialog modal-dialog-centered"
         style={{ maxWidth: "800px", width: "90%", margin: "auto" }}
-      >
+        >
         <div className="modal-content" style={{ maxHeight: "100vh", overflowY: "auto" }}>
           <div className="modal-header">
             <h5 className="modal-title">{newsTitl}</h5>
@@ -108,6 +129,17 @@ const AISummaryModal = ({ show, handleClose, URL, newsTitl}) => {
         </div>
       </div>
     </div>
+   <div
+        id="liveToast"
+        className="toast position-fixed bottom-0 end-0 mb-3 me-3 bg-danger"
+        style={{ zIndex: "999999" }}
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div className="toast-body"></div>
+      </div>
+        </>
   );
 };
 

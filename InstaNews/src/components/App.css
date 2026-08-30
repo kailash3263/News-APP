@@ -4,9 +4,276 @@
   position: fixed;
   margin: auto;
 }
+
+.logout-confirmation {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: start center;
+  padding: 1.5rem;
+  background: rgba(20, 33, 61, 0.55);
+}
+
+.logout-confirmation__panel {
+  width: min(100%, 420px);
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 1rem 2.5rem rgba(20, 33, 61, 0.25);
+  text-align: center;
+}
+
+.logout-confirmation__panel h2 {
+  margin: 0;
+  color: #14213d;
+  font-size: 1.35rem;
+}
+
+.logout-confirmation__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.logout-confirmation__yes {
+  background: #ef476f;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.logout-confirmation__no {
+  border: 1px solid #14213d;
+  color: #14213d;
+}
+
+.logout-confirmation__yes:hover,
+.logout-confirmation__yes:focus {
+  background: #d9365f;
+  color: #ffffff;
+}
+
+.logout-confirmation__no:hover,
+.logout-confirmation__no:focus {
+  background: #14213d;
+  color: #ffffff;
+}
+
 #sideNav{
   width: 75%; /* Default for mobile */
   /* background-color: black; */
+}
+
+.insta-navbar {
+  --navbar-ink: #14213d;
+  --navbar-accent: #fca311;
+  color: #ffffff;
+  min-height: 92px;
+}
+
+.insta-navbar__main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.insta-navbar__left,
+.insta-navbar__right {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 1rem);
+}
+
+.insta-navbar__right {
+  margin-left: auto;
+  min-width: 0;
+}
+
+.insta-navbar__menu,
+.insta-navbar__search-toggle {
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.insta-navbar__search-toggle:hover {
+  background: #ffffff;
+  color: var(--navbar-ink);
+}
+
+.insta-navbar__count {
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.insta-navbar__search-toggle {
+  display: none;
+}
+
+.insta-navbar__search {
+  width: 220px;
+  flex: 1 1 220px;
+  min-width: 150px;
+}
+
+.insta-navbar__search form {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.insta-navbar__search .form-control {
+  min-width: 0;
+  border: 0;
+}
+
+.insta-navbar__submit {
+  background: #20c997;
+  color: #092a20;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.insta-navbar__auth-button {
+  flex: 0 0 auto;
+  padding-right: 0.65rem;
+  padding-left: 0.65rem;
+  white-space: nowrap;
+}
+
+.insta-navbar__auth-button.btn-light {
+  background: #ffd166;
+  border-color: #ffd166;
+  color: #14213d;
+}
+
+.insta-navbar__login-button {
+  background: #ef476f;
+  border-color: #ef476f;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.week-calendar {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.week-calendar__month {
+  margin: 0 0 0.35rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.week-calendar__dates {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.week-calendar__date {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background: transparent;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.week-calendar__date:hover,
+.week-calendar__date--selected {
+  background: #ffffff;
+  color: var(--navbar-ink);
+  transform: translateY(-2px);
+}
+
+.week-calendar__date--selected {
+  border-color: #ffffff;
+  box-shadow: 0 3px 0 var(--navbar-accent);
+}
+
+.week-calendar__today {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--navbar-accent);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 991.98px) {
+  .insta-navbar__main {
+    flex-wrap: wrap;
+  }
+
+  .insta-navbar__right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .week-calendar {
+    justify-self: end;
+  }
+
+  .insta-navbar__search-toggle {
+    display: block;
+  }
+
+  .insta-navbar__search {
+    width: 100%;
+    flex-basis: 100%;
+    padding-top: 0.75rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .insta-navbar {
+    padding: 0.75rem !important;
+  }
+
+  .insta-navbar__main {
+    gap: 0.6rem;
+  }
+
+  .insta-navbar__left,
+  .insta-navbar__right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .insta-navbar__count {
+    justify-self: end;
+    padding-right: 0 !important;
+  }
+
+  .week-calendar {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .week-calendar__dates {
+    min-width: 270px;
+  }
+
+  .insta-navbar__search {
+    flex-basis: 100%;
+  }
 }
 
 @media (min-width: 760px) {

@@ -4,17 +4,62 @@ import { useNavigate } from "react-router-dom";
 
 const RecentSearches = () => {
   const [searches, setSearches] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("recentSearches")) || [];
-    setSearches(saved);
+    fetchSearches();
   }, []);
 
-  const handleDelete = (timestamp) => {
-    const filtered = searches.filter((item) => item.timestamp !== timestamp);
-    setSearches(filtered);
-    localStorage.setItem("recentSearches", JSON.stringify(filtered));
+  const fetchSearches = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/articles/search-history",
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data.message);
+        return;
+      }
+
+      setSearches(data);
+    } catch (error) {
+      console.error("Error fetching search history:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/articles/search-history/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data.message);
+        return;
+      }
+
+      // Remove from UI immediately
+      setSearches((prev) =>
+        prev.filter((item) => item._id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting search:", error);
+    }
   };
 
   const handleSearchClick = (keyword) => {
@@ -24,28 +69,40 @@ const RecentSearches = () => {
   return (
     <>
       <NavBar onSearch={(kw) => navigate(`/search/${kw}`)} />
+
       <div className="container mt-4">
         <h4>Recent Searches</h4>
-        {searches.length === 0 ? (
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : searches.length === 0 ? (
           <p>No recent searches.</p>
         ) : (
           <ul className="list-group">
-            {searches.map(({ keyword, time, timestamp }) => (
+            {searches.map((search) => (
               <li
-                key={timestamp}
+                key={search._id}
                 className="list-group-item d-flex justify-content-between align-items-center"
               >
                 <span
-                  style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
-                  onClick={() => handleSearchClick(keyword)}
+                  style={{
+                    cursor: "pointer",
+                    color: "blue",
+                    textDecoration: "underline",
+                  }}
+                  onClick={() => handleSearchClick(search.keyword)}
                 >
-                  🔍 {keyword}
+                  🔍 {search.keyword}
                   <br />
-                  <small>{time}</small>
+
+                  <small>
+                    {(new Date(search.searchedAt)).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+                  </small>
                 </span>
+
                 <button
-                  className="btn btn-sm "
-                  onClick={() => handleDelete(timestamp)}
+                  className="btn btn-sm"
+                  onClick={() => handleDelete(search._id)}
                 >
                   ❌
                 </button>
