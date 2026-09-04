@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import geminiLogo from "./geminiLogo.png";
-import LoginModal from "./loginModal";
+import LoginModal from "./LoginModal";
 
 const AISummaryModal = ({ show,setShowModal, URL, newsTitl }) => {
 

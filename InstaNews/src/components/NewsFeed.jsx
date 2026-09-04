@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
-import LoginModal from "./loginModal";
+import LoginModal from "./LoginModal";
 
 function NewsFeed({ keyword, category, date, stCnt }) {
   function getNewsUrl(keyword, category, date) {
