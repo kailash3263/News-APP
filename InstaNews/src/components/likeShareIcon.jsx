@@ -5,9 +5,12 @@ import Toast from "bootstrap/js/dist/toast";
 import "./App.css";
 
 const ActionIcons = ({ article }) => {
+  const [showShareModel, setShowShareModel] = useState(false)
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const handleShareModel = ()=>{
+    setShowShareModel(true);
+  }
   const showToast = (message) => {
     const toastElements = document.querySelectorAll("#liveToast");
     if (toastElements.length > 1) {
@@ -27,7 +30,7 @@ const ActionIcons = ({ article }) => {
   const handleLike = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/articles/like`,
+        `https://instanews-backend.onrender.com/api/articles/like`,
         {
           method: "POST",
           credentials: "include",
@@ -56,7 +59,7 @@ const ActionIcons = ({ article }) => {
   const handleBookmark = async () => {
       try {
       const response = await fetch(
-        `http://localhost:5000/api/articles/bookmark`,
+        `https://instanews-backend.onrender.com/api/articles/bookmark`,
         {
           method: "POST",
           credentials: "include",
@@ -68,7 +71,7 @@ const ActionIcons = ({ article }) => {
       );
       const data = await response.json();
       if (!response.ok) {
-        showToast(data.message || "Please login first");
+        showToast(data.message || "Please login");
         return;
       }
 
@@ -86,7 +89,7 @@ const ActionIcons = ({ article }) => {
 
         {/* Like */}
         <button
-          className="text-dark fs-4 btn"
+          className={`action-icon fs-4 btn${isLiked ? " action-icon--active" : ""}`}
           onClick={handleLike}
         >
           <i className={`fa${isLiked ? "s" : "r"} fa-thumbs-up`}></i>
@@ -94,16 +97,16 @@ const ActionIcons = ({ article }) => {
 
         {/* Share */}
         <button
-          className="text-dark fs-4 btn"
-          data-bs-toggle="modal"
-          data-bs-target="#shareModal"
+          className="action-icon fs-4 btn"
+          onClick={handleShareModel}
+          aria-label="Share article"
         >
           <i className="fas fa-share"></i>
         </button>
 
         {/* Bookmark */}
         <button
-          className="text-dark fs-4 btn"
+          className={`action-icon fs-4 btn${isBookmarked ? " action-icon--active" : ""}`}
           onClick={handleBookmark}
         >
           <i className={`fa${isBookmarked ? "s" : "r"} fa-bookmark`}></i>
@@ -111,7 +114,7 @@ const ActionIcons = ({ article }) => {
 
       </div>
 
-      <ShareOptions article={article} />
+      <ShareOptions show = {showShareModel} setShow={setShowShareModel} article={article} />
 
       {/* Toast */}
       <div

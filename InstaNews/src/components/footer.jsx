@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="w-100">
+    <div className="site-footer-wrapper w-100">
       <footer className="site-footer text-center text-white">
         {/* Grid container */}
         <div className="w-100 p-4 pb-2">
@@ -112,9 +112,8 @@ const Footer = () => {
 
             {/* Github */}
             <a
-              className="btn btn-primary social-link m-1 mx-3"
+              className="btn btn-primary social-link social-link--github m-1 mx-3"
               style={{
-                backgroundColor: "#333333",
                 borderRadius: "50%",
                 width: "3em",
                 height: "3em",
@@ -134,7 +133,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="text-center p-3" style={{ backgroundColor: "#a6a6a6" }}>
+        <div className="site-footer__copyright text-center p-3">
           © 2025 News App by&nbsp;
           <a
             className="text-white"

@@ -15,7 +15,7 @@ const RecentSearches = () => {
   const fetchSearches = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/articles/search-history",
+        "https://instanews-backend.onrender.com/api/articles/search-history",
         {
           credentials: "include",
         }
@@ -39,7 +39,7 @@ const RecentSearches = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/articles/search-history/${id}`,
+        `https://instanews-backend.onrender.com/api/articles/search-history/${id}`,
         {
           method: "DELETE",
           credentials: "include",

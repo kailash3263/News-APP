@@ -28,7 +28,7 @@ const ReadLaterNews = () => {
   const handleDelete = async(id)=>{
     try{
       const response = await fetch(
-        `http://localhost:5000/api/articles/delete-bookmarked-article/${encodeURIComponent(id)}`,
+        `https://instanews-backend.onrender.com/api/articles/delete-bookmarked-article/${encodeURIComponent(id)}`,
         {
           method:"delete"
         }
@@ -52,7 +52,7 @@ const ReadLaterNews = () => {
     const fetchBookmarkedArticles = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/articles/bookmarked",
+          "https://instanews-backend.onrender.com/api/articles/bookmarked",
           {
             credentials: "include",
           }

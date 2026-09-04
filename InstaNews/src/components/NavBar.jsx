@@ -33,7 +33,7 @@ const NavBar = ({ct,date}) => {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:5000/auth/me", {
+      const response = await fetch("https://instanews-backend.onrender.com/auth/me", {
         credentials: "include",
       });
       if (response.ok) {
@@ -54,13 +54,14 @@ const NavBar = ({ct,date}) => {
   setShowLogoutConfirmation(true);
 };
  const confirmLogout = async () => {
-  await fetch("http://localhost:5000/auth/logout", {
+  await fetch("https://instanews-backend.onrender.com/auth/logout", {
     method: "POST",
     credentials: "include",
   });
   setUser(null);
   setName("");
   setShowLogoutConfirmation(false);
+  navigate('/')
 };
 
   const toggleTheme = () => {

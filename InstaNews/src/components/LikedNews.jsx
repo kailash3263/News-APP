@@ -27,9 +27,10 @@ const LikedNews = () => {
   const handleDelete = async(id)=>{
     try{
       const response = await fetch(
-        `http://localhost:5000/api/articles/delete-liked-article/${encodeURIComponent(id)}`,
+        `https://instanews-backend.onrender.com/api/articles/delete-liked-article/${encodeURIComponent(id)}`,
         {
-          method:"delete"
+          method:"DELETE",
+          credentials: "include",
         }
       );
        if (response.ok) {
@@ -50,7 +51,7 @@ const LikedNews = () => {
     const fetchLikedArticles = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/articles/liked",
+          "https://instanews-backend.onrender.com/api/articles/liked",
           {
             credentials: "include",
           }

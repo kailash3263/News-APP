@@ -1,41 +1,25 @@
 import React, { useState, useEffect } from "react";
 import NewsCard from "./NewsCard";
-import Toast from "bootstrap/js/dist/toast";
+import LoginModal from "./loginModal";
 
 function NewsFeed({ keyword, category, date, stCnt }) {
-  const showToast = (message) => {
-    const toastElements = document.querySelectorAll("#liveToast");
-    if (toastElements.length > 1) {
-      toastElements.forEach((element, index) => {
-        if (index < toastElements.length - 1) element.remove();
-      });
-    }
-
-    const toastElement = document.getElementById("liveToast");
-    if (!toastElement) return;
-    const toastBody = toastElement.querySelector(".toast-body");
-    if (!toastBody) return;
-    const toast = new Toast(toastElement);
-    toast.show();
-  };
-
   function getNewsUrl(keyword, category, date) {
     if (keyword) {
-      return `http://localhost:5000/api/news/search?q=${encodeURIComponent(keyword)}`;
+      return `https://instanews-backend.onrender.com/api/news/search?q=${encodeURIComponent(keyword)}`;
     }
     if (category) {
-      return `http://localhost:5000/api/news/category/${encodeURIComponent(category)}`;
+      return `https://instanews-backend.onrender.com/api/news/category/${encodeURIComponent(category)}`;
     }
     if (date) {
-      return `http://localhost:5000/api/news/date/${encodeURIComponent(date)}`;
+      return `https://instanews-backend.onrender.com/api/news/date/${encodeURIComponent(date)}`;
     }
     const formatted = new Date().toLocaleDateString("en-CA");
-    return `http://localhost:5000/api/news/date/${encodeURIComponent(formatted)}`;
+    return `https://instanews-backend.onrender.com/api/news/date/${encodeURIComponent(formatted)}`;
   }
 
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [showLoginModel, setshowLoginModel] = useState(false);
   useEffect(() => {
     async function fetchNews() {
       try {
@@ -47,7 +31,7 @@ function NewsFeed({ keyword, category, date, stCnt }) {
         });
         const data = await res.json();
         if (data.message) {
-          showToast("login to get personalized news");
+          setshowLoginModel(true);
           return;
         }
         stCnt(data.count);
@@ -91,7 +75,7 @@ function NewsFeed({ keyword, category, date, stCnt }) {
                   />
                 ))
               ) : (
-                <p className="text-center text-muted fs-5 mb-0">
+                <p className="news-feed__empty text-center fs-5 mb-0">
                   No news found.
                 </p>
               )}
@@ -99,16 +83,7 @@ function NewsFeed({ keyword, category, date, stCnt }) {
           )}
         </div>
       </div>
-      <div
-        id="liveToast"
-        className="toast position-fixed bottom-0 end-0 mb-3 me-3 bg-danger"
-        style={{ zIndex: "999999" }}
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        <div className="toast-body"></div>
-      </div>
+        {<LoginModal show = {showLoginModel} close = {setshowLoginModel}/>} 
     </>
   );
 }

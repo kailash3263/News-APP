@@ -11,10 +11,6 @@ const NewsCard = ({ title, _id, imageUrl, sourceName, link, pubDate, showActionI
     setShowModal(true);
   };
 
-  const handleClose = () => {
-    setShowModal(false);
-  };
-
   const handleDeleteClick = () => {
      onDelete(_id);
   };
@@ -44,7 +40,7 @@ const NewsCard = ({ title, _id, imageUrl, sourceName, link, pubDate, showActionI
         )}
 
         <img
-          src={imageUrl || "https://via.placeholder.com/150"}
+          src={imageUrl || "https://media.istockphoto.com/id/1369150014/vector/breaking-news-with-world-map-background-vector.jpg?s=612x612&w=0&k=20&c=9pR2-nDBhb7cOvvZU_VdgkMmPJXrBQ4rB1AkTXxRIKM="}
           className="card-img-top"
           alt="News Thumbnail"
         />
@@ -77,8 +73,8 @@ const NewsCard = ({ title, _id, imageUrl, sourceName, link, pubDate, showActionI
       </div>
 
       {/* Import and render Modal */}
-      <AISummaryModal show={showModal} URL ={link} newsTitl = {title} handleClose={handleClose} />
-      {/* <AISummaryModal show={showModal} url ={link} newsTitle = {title}/> */}
+      <AISummaryModal show={showModal} setShowModal = {setShowModal} URL ={link} newsTitl = {title} />
+   
     </div>
   );
 };

@@ -36,7 +36,7 @@ function Signup() {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/auth/signUp", {
+      const response = await fetch("https://instanews-backend.onrender.com/auth/signUp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
